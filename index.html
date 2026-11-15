@@ -14,9 +14,47 @@
         .glass-card:hover { border-color: rgba(236, 72, 153, 0.5); transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.3); }
         .btn-gradient { background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); transition: opacity 0.2s; }
         .btn-gradient:hover { opacity: 0.9; }
+
+        /* ستايل شاشة التحميل الفخمة (Splash Screen) */
+        #splashScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #0d0914;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #splashScreen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
+
+    <!-- شاشة التحميل (Splash Screen) فول سكرين مع الصورة واسم المتجر -->
+    <div id="splashScreen">
+        <div class="relative w-full h-full flex flex-col items-center justify-center p-4">
+            <!-- صورة التحميل (استبدل رابط src برابط صورتك أو اسم الملف المحلي مثل splash.jpg) -->
+            <div class="absolute inset-0 overflow-hidden">
+                <img src="splash.jpg" alt="Esraa Gallery Splash" class="w-full h-full object-cover opacity-60 filter blur-[2px] scale-105 transition duration-1000">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0d0914] via-[#0d0914]/50 to-transparent"></div>
+            </div>
+            
+            <div class="relative z-10 text-center space-y-4 animate-pulse">
+                <div class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-3xl overflow-hidden border-2 border-pink-500/50 shadow-2xl shadow-pink-500/40">
+                    <img src="splash.jpg" alt="Logo" class="w-full h-full object-cover">
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent drop-shadow-lg">
+                    Esraa Gallery
+                </h1>
+                <p class="text-xs md:text-sm text-pink-200 tracking-widest uppercase font-bold">دمياط كل ما هو جميل هنا</p>
+            </div>
+        </div>
+    </div>
 
     <!-- الهيدر -->
     <header class="glass-nav sticky top-0 z-40">
@@ -107,7 +145,7 @@
                 
                 <div class="space-y-3">
                     <input type="text" id="custName" placeholder="الاسم بالكامل 👤" class="w-full bg-slate-900/80 border border-pink-500/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 text-white placeholder-slate-500">
-                    <input type="tel" id="custPhone" maxlength="11" placeholder="رقم الموبايل (01111111111) 📱" class="w-full bg-slate-900/80 border border-pink-500/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 text-white placeholder-slate-500">
+                    <input type="tel" id="custPhone" maxlength="11" placeholder="رقم الموبايل (01127073266) 📱" class="w-full bg-slate-900/80 border border-pink-500/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 text-white placeholder-slate-500">
                     <input type="text" id="custAddress" placeholder="العنوان بالتفصيل 📍" class="w-full bg-slate-900/80 border border-pink-500/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 text-white placeholder-slate-500">
                 </div>
                 
@@ -127,6 +165,17 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+
+        // إخفاء شاشة التحميل بانسيابية بعد فتح الصفحة بـ 1.8 ثانية
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                if(splash) {
+                    splash.classList.add('fade-out');
+                    setTimeout(() => splash.remove(), 800); // إزالة العنصر تماماً من الصفحة
+                }
+            }, 1800);
+        });
 
         const firebaseConfig = {
             apiKey: "AIzaSyArzZQUw2joSeeVkxNBVCMZfeJkKtAVnDg",
@@ -443,7 +492,6 @@
                         </button>
                     </div>
                     
-                    <!-- خانة الحفر/التفاصيل ورَفْع الصورة لكل منتج -->
                     <div class="space-y-2 pt-2 border-t border-slate-800">
                         <input type="text" value="${item.customNote || ''}" oninput="updateCartItemNote(${index}, this.value)" placeholder="${t.customNamePlaceholder}" class="w-full bg-slate-950 border border-pink-500/20 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
                         <div class="flex items-center gap-2">
@@ -498,7 +546,6 @@
             const total = subtotal - ((subtotal * discountPercent) / 100);
 
             try {
-                // حفظ الطلب في قاعدة بيانات فايربيس (بدون تحويل واتساب)
                 await addDoc(collection(db, "orders"), {
                     customerName: name,
                     customerPhone: phone,
@@ -512,7 +559,6 @@
 
                 alert(currentLang === 'ar' ? "تم تأكيد طلبك بنجاح! 💝" : "Order confirmed successfully! 💝");
                 
-                // إعادة ضبط السلة والصفحة ورجوعها للرئيسية
                 cart = [];
                 discountPercent = 0;
                 document.getElementById('custName').value = '';
