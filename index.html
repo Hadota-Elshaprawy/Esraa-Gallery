@@ -15,7 +15,7 @@
         .btn-gradient { background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); transition: opacity 0.2s; }
         .btn-gradient:hover { opacity: 0.9; }
 
-        /* ستايل شاشة التحميل الفخمة (Splash Screen) */
+        /* ستايل شاشة التحميل (Splash Screen) */
         #splashScreen {
             position: fixed;
             inset: 0;
@@ -35,23 +35,22 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
 
-    <!-- شاشة التحميل (Splash Screen) فول سكرين مع الصورة واسم المتجر -->
+    <!-- شاشة التحميل (Splash Screen) -->
     <div id="splashScreen">
         <div class="relative w-full h-full flex flex-col items-center justify-center p-4">
-            <!-- صورة التحميل (استبدل رابط src برابط صورتك أو اسم الملف المحلي مثل splash.jpg) -->
             <div class="absolute inset-0 overflow-hidden">
-                <img src="splash.jpg" alt="Esraa Gallery Splash" class="w-full h-full object-cover opacity-60 filter blur-[2px] scale-105 transition duration-1000">
+                <img src="splash.jpg" alt="Esraa Gallery Splash" class="w-full h-full object-cover opacity-60 filter blur-[2px] scale-105 transition duration-1000" onerror="this.style.display='none'">
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0d0914] via-[#0d0914]/50 to-transparent"></div>
             </div>
             
             <div class="relative z-10 text-center space-y-4 animate-pulse">
-                <div class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-3xl overflow-hidden border-2 border-pink-500/50 shadow-2xl shadow-pink-500/40">
-                    <img src="splash.jpg" alt="Logo" class="w-full h-full object-cover">
+                <div class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-3xl overflow-hidden border-2 border-pink-500/50 shadow-2xl shadow-pink-500/40 bg-slate-900 flex items-center justify-center">
+                    <img src="splash.jpg" alt="Logo" class="w-full h-full object-cover" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
                 </div>
                 <h1 class="text-3xl md:text-5xl font-black bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent drop-shadow-lg">
                     Esraa Gallery
                 </h1>
-                <p class="text-xs md:text-sm text-pink-200 tracking-widest uppercase font-bold">دمياط كل ما هو جميل هنا</p>
+                <p class="text-xs md:text-sm text-pink-200 tracking-widest uppercase font-bold">جمعنا كل ما هو جميل هنا لك انت</p>
             </div>
         </div>
     </div>
@@ -63,10 +62,28 @@
                 <span class="text-3xl">💝</span>
                 <h1 class="text-xl md:text-2xl font-black bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">Esraa Gallery</h1>
             </div>
-            <div class="flex items-center gap-3">
-                <button onclick="toggleLanguage()" id="langBtn" class="bg-slate-900 border border-pink-500/30 text-pink-300 px-3.5 py-2 rounded-2xl text-xs font-bold transition hover:bg-pink-500/10">
+            <div class="flex items-center gap-2 md:gap-3">
+                <!-- قائمة التواصل المنسدلة مع إسراء -->
+                <div class="relative">
+                    <button onclick="toggleContactMenu()" id="contactBtn" class="bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 px-3.5 py-2 rounded-2xl text-xs font-bold transition hover:bg-emerald-600/30 flex items-center gap-1.5 shadow">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> <span id="contactText">التواصل مع إسراء</span> <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <!-- القائمة المنسدلة -->
+                    <div id="contactDropdown" class="absolute left-0 mt-2 w-48 bg-slate-900 border border-pink-500/20 rounded-2xl shadow-2xl hidden z-50 overflow-hidden py-1">
+                        <a href="https://wa.me/201124763164" target="_blank" class="flex items-center gap-2.5 px-4 py-2.5 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition border-b border-slate-800">
+                            <i class="fa-solid fa-comments text-emerald-400"></i> <span id="directChatText">مراسلة إسراء (واتساب)</span>
+                        </a>
+                        <a href="https://chat.whatsapp.com/Goln31VT0BjDL4pMzKfOS5?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" class="flex items-center gap-2.5 px-4 py-2.5 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition">
+                            <i class="fa-solid fa-users text-emerald-400"></i> <span id="groupChatText">جروب الواتساب</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- زر تبديل اللغة -->
+                <button onclick="toggleLanguage()" id="langBtn" class="bg-slate-900 border border-pink-500/30 text-pink-300 px-3 py-2 rounded-2xl text-xs font-bold transition hover:bg-pink-500/10">
                     <i class="fa-solid fa-globe"></i> <span id="langBtnText">English</span>
                 </button>
+                <!-- زر السلة -->
                 <button onclick="toggleCart()" class="btn-gradient relative text-white px-4 py-2.5 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-pink-500/25">
                     <i class="fa-solid fa-bag-shopping"></i>
                     <span id="cartText">السلة</span>
@@ -166,15 +183,32 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-        // إخفاء شاشة التحميل بانسيابية بعد فتح الصفحة بـ 1.8 ثانية
+        // إخفاء شاشة التحميل بانسيابية
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
                 if(splash) {
                     splash.classList.add('fade-out');
-                    setTimeout(() => splash.remove(), 800); // إزالة العنصر تماماً من الصفحة
+                    setTimeout(() => splash.remove(), 800);
                 }
             }, 1800);
+        });
+
+        // دالة إظهار وإخفاء قائمة التواصل
+        window.toggleContactMenu = () => {
+            const dropdown = document.getElementById('contactDropdown');
+            if(dropdown) {
+                dropdown.classList.toggle('hidden');
+            }
+        };
+
+        // غلق القائمة لو الزبون ضغط في أي مكان تاني برة
+        window.addEventListener('click', (e) => {
+            const btn = document.getElementById('contactBtn');
+            const dropdown = document.getElementById('contactDropdown');
+            if(btn && dropdown && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
         });
 
         const firebaseConfig = {
@@ -227,7 +261,10 @@
                 catDecor: "ديكور",
                 catOther: "أخرى",
                 customNamePlaceholder: "اكتب الاسم للحفر (اختياري)... ✍️",
-                uploadImgLabel: "صورة للطباعة 📷"
+                uploadImgLabel: "صورة للطباعة 📷",
+                contactText: "التواصل مع إسراء",
+                directChatText: "مراسلة إسراء (واتساب)",
+                groupChatText: "جروب الواتساب"
             },
             en: {
                 pageTitle: "Esraa Gallery - Luxury Gifts World 💝",
@@ -258,7 +295,10 @@
                 catDecor: "Decor",
                 catOther: "Other",
                 customNamePlaceholder: "Enter name for engraving (optional)... ✍️",
-                uploadImgLabel: "Image for printing 📷"
+                uploadImgLabel: "Image for printing 📷",
+                contactText: "Contact Esraa",
+                directChatText: "Chat with Esraa (WhatsApp)",
+                groupChatText: "WhatsApp Group"
             }
         };
 
@@ -291,6 +331,9 @@
             document.getElementById('orderBtn').innerText = t.orderBtn;
             document.getElementById('footerText').innerText = t.footerText;
             document.getElementById('langBtnText').innerText = t.langBtnText;
+            document.getElementById('contactText').innerText = t.contactText;
+            document.getElementById('directChatText').innerText = t.directChatText;
+            document.getElementById('groupChatText').innerText = t.groupChatText;
 
             const cats = document.querySelectorAll('#categoryButtons button');
             if(cats.length >= 5) {
