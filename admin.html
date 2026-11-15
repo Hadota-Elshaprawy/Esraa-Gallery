@@ -16,7 +16,7 @@
 </head>
 <body class="min-h-screen selection:bg-pink-500 selection:text-white">
 
-    <!-- شاشة تسجيل الدخول (كلمة السر مخفية بنجوم) -->
+    <!-- شاشة تسجيل الدخول -->
     <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
         <div class="glass-box p-8 rounded-3xl w-full max-w-sm text-center space-y-5 shadow-2xl">
             <div class="text-4xl mb-1">🔐</div>
@@ -61,7 +61,6 @@
                     <input type="number" id="pPrice" placeholder="السعر الأساسي (ج.م)" class="bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
                     <input type="number" id="pOffer" placeholder="سعر العرض (اختياري)" class="bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
                     
-                    <!-- التصنيفات الجديدة المطلوبة -->
                     <select id="pCategory" class="bg-slate-900/90 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-pink-300 focus:outline-none focus:border-pink-500">
                         <option value="رجالي">👔 رجالي</option>
                         <option value="حريمي">👜 حريمي</option>
@@ -220,6 +219,7 @@
             }).join('');
         });
 
+        // جلب وعرض الطلبات مع تفاصيل الحفر وصورة الطباعة
         const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             const ordersList = document.getElementById('ordersList');
@@ -233,7 +233,19 @@
             ordersList.innerHTML = snapshot.docs.map(docSnap => {
                 const o = docSnap.data();
                 const id = docSnap.id;
-                const itemsHtml = o.items.map(i => `<li>• ${i.name} (×${i.qty}) - ${i.price * i.qty} ج.م</li>`).join('');
+                
+                // عرض تفاصيل المنتجات بما فيها الاسم المطلوب للحفر وصورة الطباعة
+                const itemsHtml = o.items.map(i => `
+                    <div class="bg-slate-900/90 p-3 rounded-xl border border-pink-500/10 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-pink-300">🎁 ${i.name}</span>
+                            <span class="text-xs text-slate-300">الكمية: ${i.qty} | السعر: ${i.price * i.qty} ج.م</span>
+                        </div>
+                        ${i.customNote ? `<p class="text-xs text-emerald-300 bg-emerald-950/40 p-2 rounded-lg border border-emerald-500/20">✍️ <strong>الاسم للحفر/الملاحظة:</strong> ${i.customNote}</p>` : ''}
+                        ${i.customImgUrl ? `<div><a href="${i.customImgUrl}" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-pink-400 bg-pink-950/40 px-3 py-1.5 rounded-lg border border-pink-500/20 hover:bg-pink-900/40 transition"><i class="fa-solid fa-image"></i> عرض صورة الطباعة المرفقة 📷</a></div>` : ''}
+                    </div>
+                `).join('');
+
                 return `
                 <div class="glass-box p-5 rounded-2xl space-y-3 border-l-4 ${o.status === 'جديد' ? 'border-l-pink-500' : 'border-l-slate-700'}">
                     <div class="flex justify-between items-start">
@@ -241,14 +253,14 @@
                             <h3 class="font-bold text-base text-pink-300">${o.customerName}</h3>
                             <p class="text-xs text-slate-300">📱 ${o.customerPhone}</p>
                             <p class="text-xs text-slate-400">📍 ${o.customerAddress}</p>
-                            ${o.coupon ? `<p class="text-[11px] text-emerald-400 mt-1">🎟️ مستخدم كوبون: ${o.coupon}</p>` : ''}
+                            ${o.coupon && o.coupon !== 'بدون' ? `<p class="text-[11px] text-emerald-400 mt-1">🎟️ مستخدم كوبون: ${o.coupon}</p>` : ''}
                         </div>
                         <span class="px-3 py-1 rounded-full text-[11px] font-bold ${o.status === 'جديد' ? 'bg-pink-500/20 text-pink-300 border border-pink-500/30' : 'bg-slate-900 text-slate-400'}">
                             ${o.status}
                         </span>
                     </div>
-                    <ul class="bg-slate-950/60 p-3 rounded-xl text-xs space-y-1 text-slate-300 border border-pink-500/10">${itemsHtml}</ul>
-                    <div class="flex justify-between items-center pt-2">
+                    <div class="space-y-2 pt-1">${itemsHtml}</div>
+                    <div class="flex justify-between items-center pt-2 border-t border-slate-800">
                         <span class="font-black text-pink-400 text-sm">الإجمالي: ${o.total} ج.م</span>
                         <div class="flex gap-2">
                             ${o.status === 'جديد' ? `<button onclick="markDone('${id}')" class="btn-gradient text-xs px-3 py-1.5 rounded-lg font-bold text-white shadow">تم التسليم ✓</button>` : ''}
@@ -287,7 +299,7 @@
         };
 
         window.markDone = async (id) => {
-            await updateDoc(doc(db, "orders", id), { status: "تم التسليم" });
+            await updateDoc(doc(db,="orders", id), { status: "تم التسليم" });
         };
 
         window.deleteOrder = async (id) => {
