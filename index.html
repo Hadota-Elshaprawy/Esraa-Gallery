@@ -38,12 +38,11 @@
         </div>
     </header>
 
-    <!-- البانر والبحث والتصنيفات -->
+    <!-- البانر المحدث والبحث -->
     <div class="max-w-6xl mx-auto px-4 pt-8 space-y-4">
         <div class="bg-gradient-to-r from-pink-950/40 via-purple-950/40 to-slate-900 border border-pink-500/20 rounded-3xl p-6 md:p-8 text-center relative overflow-hidden">
             <div class="absolute -right-10 -top-10 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl"></div>
-            <h2 id="bannerTitle" class="text-2xl md:text-3xl font-black mb-2 text-pink-300">اصنعي أجمل اللحظات لمن تحبين ✨</h2>
-            <p id="bannerDesc" class="text-slate-400 text-xs md:text-sm max-w-xl mx-auto mb-4">تشكيلة مميزة وراقية من أروع الهدايا والبوكسات المصممة خصيصاً لتناسب كل المناسبات الجميلة.</p>
+            <h2 id="bannerTitle" class="text-xl md:text-2xl font-black mb-4 text-pink-300">جمعنا كل ما هو جميل هنا لك انت</h2>
             
             <div class="max-w-md mx-auto">
                 <input type="text" id="searchInput" oninput="filterProducts()" placeholder="ابحثي عن هدية معينة... 🔍" class="w-full bg-slate-900/90 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-pink-500 shadow-inner">
@@ -85,8 +84,9 @@
             <div id="cartItems" class="p-5 overflow-y-auto flex-1 space-y-3"></div>
 
             <div class="p-5 border-t border-pink-500/20 bg-purple-950/20 space-y-4">
+                <!-- خانة كود الخصم (بدون كتابة كود مسبقاً) -->
                 <div class="flex gap-2">
-                    <input type="text" id="couponInput" placeholder="كود الخصم (HD11)" class="flex-1 bg-slate-900/80 border border-pink-500/30 rounded-xl px-3 py-2 text-xs text-white uppercase placeholder-slate-500 focus:outline-none focus:border-pink-500">
+                    <input type="text" id="couponInput" placeholder="ادخل كود الخصم" class="flex-1 bg-slate-900/80 border border-pink-500/30 rounded-xl px-3 py-2 text-xs text-white uppercase placeholder-slate-500 focus:outline-none focus:border-pink-500">
                     <button onclick="applyCoupon()" id="couponBtn" class="bg-pink-600/30 hover:bg-pink-600 text-pink-300 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition border border-pink-500/30">تطبيق الخصم</button>
                 </div>
                 <div id="couponMsg" class="text-xs font-semibold text-emerald-400 hidden"></div>
@@ -97,7 +97,7 @@
                         <span id="subtotalAmount">0 ج.م</span>
                     </div>
                     <div id="discountRow" class="flex justify-between text-sm text-pink-400 hidden">
-                        <span id="discountLabel">قيمة الخصم (HD11):</span>
+                        <span id="discountLabel">قيمة الخصم:</span>
                         <span id="discountAmount">-0 ج.م</span>
                     </div>
                     <div class="flex justify-between text-lg font-black pt-1 border-t border-pink-500/10">
@@ -119,9 +119,9 @@
         </div>
     </div>
 
-    <!-- الفوتر -->
+    <!-- الفوتر بحقوق الملكية الجديدة -->
     <footer class="border-t border-pink-500/10 py-6 text-center text-xs text-slate-500">
-        <span id="footerText">جميع الحقوق محفوظة لـ Esraa Gallery 💝 2026</span>
+        <span id="footerText">حقوق الملكيه محفوظه لدي HadoTaa</span>
     </footer>
 
     <!-- سكربت التشغيل المتكامل -->
@@ -153,26 +153,25 @@
             ar: {
                 pageTitle: "Esraa Gallery - عالم الهدايا الراقية 💝",
                 cartText: "السلة",
-                bannerTitle: "اصنعي أجمل اللحظات لمن تحبين ✨",
-                bannerDesc: "تشكيلة مميزة وراقية من أروع الهدايا والبوكسات المصممة خصيصاً لتناسب كل المناسبات الجميلة.",
+                bannerTitle: "جمعنا كل ما هو جميل هنا لك انت",
                 searchPlaceholder: "ابحثي عن هدية معينة... 🔍",
                 loadingText: "جاري تحميل الهدايا الساحرة... 🎁",
-                emptyProducts: "لا توجد هدايا مضافة حالياً. ارفع أول هدية من لوحة التحكم وستظهر هنا فوراً! ✨",
+                emptyProducts: "لا يوجد هدايا الان",
                 noSearch: "عذراً، لا توجد هدايا مطابقة لبحثك ✨",
                 addCart: "أضف للسلة",
                 closeText: "إغلاق",
                 cartModalTitle: "سلة المشتريات",
                 emptyCart: "سلة المشتريات فارغة تماماً 🛍️",
-                couponPlaceholder: "كود الخصم (HD11)",
+                couponPlaceholder: "ادخل كود الخصم",
                 couponBtn: "تطبيق الخصم",
                 subtotalLabel: "المجموع الفرعي:",
-                discountLabel: "قيمة الخصم (HD11):",
+                discountLabel: "قيمة الخصم:",
                 totalLabel: "الإجمالي الكلي:",
                 custName: "الاسم بالكامل 👤",
                 custPhone: "رقم الموبايل (01127073266) 📱",
                 custAddress: "العنوان بالتفصيل 📍",
                 orderBtn: "تأكيد الطلب 🛍️",
-                footerText: "جميع الحقوق محفوظة لـ Esraa Gallery 💝 2026",
+                footerText: "حقوق الملكيه محفوظه لدي HadoTaa",
                 langBtnText: "English",
                 catAll: "الكل",
                 catMen: "رجالي",
@@ -183,26 +182,25 @@
             en: {
                 pageTitle: "Esraa Gallery - Luxury Gifts World 💝",
                 cartText: "Cart",
-                bannerTitle: "Create Beautiful Moments for Your Loved Ones ✨",
-                bannerDesc: "A unique and elegant collection of gifts and boxes designed specifically for every beautiful occasion.",
+                bannerTitle: "We collected everything beautiful here for you",
                 searchPlaceholder: "Search for a gift... 🔍",
                 loadingText: "Loading magical gifts... 🎁",
-                emptyProducts: "No gifts available right now. Add your first gift from the admin panel! ✨",
+                emptyProducts: "No gifts available now",
                 noSearch: "Sorry, no gifts match your search ✨",
                 addCart: "Add to Cart",
                 closeText: "Close",
                 cartModalTitle: "Shopping Cart",
                 emptyCart: "Your shopping cart is empty 🛍️",
-                couponPlaceholder: "Promo Code (HD11)",
+                couponPlaceholder: "Enter promo code",
                 couponBtn: "Apply Coupon",
                 subtotalLabel: "Subtotal:",
-                discountLabel: "Discount (HD11):",
+                discountLabel: "Discount:",
                 totalLabel: "Total:",
                 custName: "Full Name 👤",
                 custPhone: "Mobile Number (01127073266) 📱",
                 custAddress: "Detailed Address 📍",
                 orderBtn: "Confirm Order 🛍️",
-                footerText: "All Rights Reserved to Esraa Gallery 💝 2026",
+                footerText: "Copyrights reserved to HadoTaa",
                 langBtnText: "عربي",
                 catAll: "All",
                 catMen: "Men",
@@ -212,7 +210,6 @@
             }
         };
 
-        // دالة تبديل اللغة
         window.toggleLanguage = () => {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
             const htmlRoot = document.getElementById('htmlRoot');
@@ -228,7 +225,6 @@
             document.getElementById('pageTitle').innerText = t.pageTitle;
             document.getElementById('cartText').innerText = t.cartText;
             document.getElementById('bannerTitle').innerText = t.bannerTitle;
-            document.getElementById('bannerDesc').innerText = t.bannerDesc;
             document.getElementById('searchInput').placeholder = t.searchPlaceholder;
             document.getElementById('closeText').innerText = t.closeText;
             document.getElementById('cartModalTitle').innerText = t.cartModalTitle;
@@ -254,7 +250,6 @@
             }
         }
 
-        // جلب البيانات من فايربيس بشكل مباشر وفوري
         onSnapshot(collection(db, "products"), (snapshot) => {
             const loading = document.getElementById('loading');
             if(loading) loading.style.display = 'none';
@@ -290,7 +285,7 @@
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<p class="col-span-full text-center text-slate-400 py-16 text-base font-semibold">${allProducts.length === 0 ? t.emptyProducts : t.noSearch}</p>`;
+                grid.innerHTML = `<p class="col-span-full text-center text-slate-400 py-16 text-base font-semibold">${t.emptyProducts}</p>`;
                 return;
             }
 
