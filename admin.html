@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #0d0914; color: #f3e8ff; }
+        body { font-family:  Cairo , sans-serif; background-color: #0d0914; color: #f3e8ff; }
         .glass-box { background: rgba(26, 17, 39, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(236, 72, 153, 0.2); }
         .btn-gradient { background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%); transition: opacity 0.2s; }
         .btn-gradient:hover { opacity: 0.9; }
@@ -16,15 +17,16 @@
 </head>
 <body class="min-h-screen selection:bg-pink-500 selection:text-white">
 
-    <!-- شاشة تسجيل الدخول -->
+    <!-- شاشة تسجيل الدخول (مع إخفاء كلمة المرور) -->
     <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
         <div class="glass-box p-8 rounded-3xl w-full max-w-sm text-center space-y-5 shadow-2xl">
             <div class="text-4xl mb-1">🔐</div>
             <h1 class="text-2xl font-black text-pink-300">Esraa Gallery Admin</h1>
-            <p class="text-xs text-slate-400">لوحة تحكم صاحب المتجر الإدارية</p>
+            <p class="text-xs text-slate-400">لوحة تحكم صاحب المتجر الإدارية الآمنة</p>
             <div class="space-y-3 pt-2">
-                <input type="text" id="adminUser" placeholder="اسم المستخدم (SOSO)" class="w-full bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-center focus:outline-none focus:border-pink-500 text-white placeholder-slate-500 text-sm">
-                <input type="password" id="adminPass" placeholder="كلمة المرور (SOSO111)" class="w-full bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-center focus:outline-none focus:border-pink-500 text-white placeholder-slate-500 text-sm">
+                <input type="text" id="adminUser" placeholder="اسم المستخدم" class="w-full bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-center focus:outline-none focus:border-pink-500 text-white placeholder-slate-500 text-sm">
+                <!-- تم تغيير type إلى password لإخفاء الحروف بنجوم -->
+                <input type="password" id="adminPass" placeholder="كلمة المرور السرية" class="w-full bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-center focus:outline-none focus:border-pink-500 text-white placeholder-slate-500 text-sm">
             </div>
             <button onclick="checkPass()" class="w-full btn-gradient py-3.5 rounded-2xl font-bold text-white shadow-lg shadow-pink-500/20">تسجيل الدخول ✨</button>
         </div>
@@ -35,11 +37,14 @@
         <div class="glass-box p-5 rounded-3xl flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center gap-3">
                 <span class="text-2xl">⚙️</span>
-                <h1 class="text-xl font-black text-pink-300">لوحة تحكم Esraa Gallery</h1>
+                <div>
+                    <h1 class="text-xl font-black text-pink-300">لوحة تحكم Esraa Gallery</h1>
+                    <p class="text-xs text-slate-400" id="statsCounter">جاري تحميل الإحصائيات...</p>
+                </div>
             </div>
             <div class="flex gap-2">
-                <button onclick="switchTab('orders')" id="tabOrders" class="btn-gradient px-4 py-2 rounded-xl font-bold text-xs shadow-md">الطلبات الواردة</button>
-                <button onclick="switchTab('products')" id="tabProducts" class="bg-slate-900 border border-pink-500/20 px-4 py-2 rounded-xl font-bold text-xs text-slate-300">إدارة الأصناف والعروض</button>
+                <button onclick="switchTab( orders )" id="tabOrders" class="btn-gradient px-4 py-2 rounded-xl font-bold text-xs shadow-md">الطلبات الواردة</button>
+                <button onclick="switchTab( products )" id="tabProducts" class="bg-slate-900 border border-pink-500/20 px-4 py-2 rounded-xl font-bold text-xs text-slate-300">إدارة الأصناف والعروض</button>
             </div>
         </div>
 
@@ -51,24 +56,30 @@
 
         <!-- قسم إدارة الأصناف والعروض -->
         <section id="productsSection" class="hidden space-y-8">
-            <!-- فورم إضافة منتج جديد -->
+            <!-- فورم إضافة منتج جديد مع اختيار القسم -->
             <div class="glass-box p-6 rounded-3xl space-y-5">
                 <h2 class="text-lg font-bold text-pink-300 flex items-center gap-2"><i class="fa-solid fa-circle-plus"></i> إضافة هدية جديدة للمتجر</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" id="pName" placeholder="اسم الهدية (مثال: بوكس ورد مع شوكولاتة)" class="bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="text" id="pName" placeholder="اسم الهدية" class="bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
                     <input type="number" id="pPrice" placeholder="السعر الأساسي (ج.م)" class="bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
-                    <input type="number" id="pOffer" placeholder="سعر العرض (اختياري - سيبه فاضي لو مفيش عرض)" class="bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
-                    <input type="file" id="pImage" accept="image/*" class="bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-2.5 text-xs text-slate-300 file:mr-4 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-500/20 file:text-pink-300">
+                    <input type="number" id="pOffer" placeholder="سعر العرض (اختياري)" class="bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
+                    
+                    <select id="pCategory" class="bg-slate-900/90 border border-pink-500/30 rounded-2xl px-4 py-3 text-sm text-pink-300 focus:outline-none focus:border-pink-500">
+                        <option value="بوكسات">📦 بوكسات</option>
+                        <option value="ورد">💐 ورد وهدايا</option>
+                        <option value="توزيعات">🎁 توزيعات</option>
+                    </select>
+
+                    <input type="file" id="pImage" accept="image/*" class="md:col-span-2 bg-slate-900/80 border border-pink-500/30 rounded-2xl px-4 py-2.5 text-xs text-slate-300 file:mr-4 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-500/20 file:text-pink-300">
                 </div>
-                <button onclick="addProduct()" id="addBtn" class="btn-gradient px-6 py-3 rounded-2xl font-bold text-sm text-white shadow-lg shadow-pink-500/20 transition">
+                <button onclick="addProduct()" id="addBtn" class="w-full btn-gradient py-3.5 rounded-2xl font-bold text-sm text-white shadow-lg shadow-pink-500/20 transition">
                     رفع الصورة وحفظ الهدية فوري 🚀
                 </button>
             </div>
 
-            <!-- قائمة الأصناف الحالية لتعديل الأسعار والعروض -->
+            <!-- قائمة الأصناف الحالية -->
             <div class="space-y-4">
                 <h2 class="text-lg font-bold text-pink-300 flex items-center gap-2"><i class="fa-solid fa-tags"></i> إدارة أسعار وعروض الأصناف الحالية</h2>
-                <p class="text-xs text-slate-400">لتفعيل عرض على أي صنف، اكتبي السعر الجديد في خانة "سعر العرض" واضغطي "حفظ التعديل". لإلغاء العرض امسحي السعر واضغطي حفظ.</p>
                 <div id="adminProductsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
         </section>
@@ -96,45 +107,44 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ربط دالة التحقق بعالمية النافذة لتعمل مع زر onclick وصيغة الموديل
         window.checkPass = function() {
-            const userInput = document.getElementById('adminUser').value.trim();
-            const passInput = document.getElementById('adminPass').value.trim();
+            const userInput = document.getElementById( adminUser ).value.trim();
+            const passInput = document.getElementById( adminPass ).value.trim();
 
             if (userInput === ADMIN_USER && passInput === ADMIN_PASS) {
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
+                document.getElementById( loginScreen ).classList.add( hidden );
+                document.getElementById( dashboard ).classList.remove( hidden );
             } else {
-                alert("اسم المستخدم أو كلمة المرور غير صحيحة! تأكد من كتابة SOSO و SOSO111");
+                alert("اسم المستخدم أو كلمة المرور غير صحيحة!");
             }
         };
 
-        // تفعيل زر Enter لتسجيل الدخول السريع
-        document.addEventListener('DOMContentLoaded', () => {
-            const passField = document.getElementById('adminPass');
+        document.addEventListener( DOMContentLoaded , () => {
+            const passField = document.getElementById( adminPass );
             if(passField) {
-                passField.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') checkPass();
+                passField.addEventListener( keypress , (e) => {
+                    if (e.key ===  Enter ) checkPass();
                 });
             }
         });
 
         window.switchTab = (tab) => {
-            document.getElementById('ordersSection').classList.toggle('hidden', tab !== 'orders');
-            document.getElementById('productsSection').classList.toggle('hidden', tab !== 'products');
-            document.getElementById('tabOrders').className = tab === 'orders' ? 'btn-gradient px-4 py-2 rounded-xl font-bold text-xs shadow-md' : 'bg-slate-900 border border-pink-500/20 px-4 py-2 rounded-xl font-bold text-xs text-slate-300';
-            document.getElementById('tabProducts').className = tab === 'products' ? 'btn-gradient px-4 py-2 rounded-xl font-bold text-xs shadow-md' : 'bg-slate-900 border border-pink-500/20 px-4 py-2 rounded-xl font-bold text-xs text-slate-300';
+            document.getElementById( ordersSection ).classList.toggle( hidden , tab !==  orders );
+            document.getElementById( productsSection ).classList.toggle( hidden , tab !==  products );
+            document.getElementById( tabOrders ).className = tab ===  orders  ?  btn-gradient px-4 py-2 rounded-xl font-bold text-xs shadow-md  :  bg-slate-900 border border-pink-500/20 px-4 py-2 rounded-xl font-bold text-xs text-slate-300 ;
+            document.getElementById( tabProducts ).className = tab ===  products  ?  btn-gradient px-4 py-2 rounded-xl font-bold text-xs shadow-md  :  bg-slate-900 border border-pink-500/20 px-4 py-2 rounded-xl font-bold text-xs text-slate-300 ;
         };
 
         window.addProduct = async () => {
-            const name = document.getElementById('pName').value.trim();
-            const price = document.getElementById('pPrice').value.trim();
-            const offerPrice = document.getElementById('pOffer').value.trim();
-            const imageFile = document.getElementById('pImage').files[0];
+            const name = document.getElementById( pName ).value.trim();
+            const price = document.getElementById( pPrice ).value.trim();
+            const offerPrice = document.getElementById( pOffer ).value.trim();
+            const category = document.getElementById( pCategory ).value;
+            const imageFile = document.getElementById( pImage ).files[0];
 
             if (!name || !price || !imageFile) return alert("من فضلك أدخلي اسم الهدية، السعر، واختاري الصورة!");
 
-            const btn = document.getElementById('addBtn');
+            const btn = document.getElementById( addBtn );
             btn.disabled = true;
             btn.innerText = "جاري رفع الصورة وحفظ الهدية...";
 
@@ -145,7 +155,7 @@
                 const imgData = await res.json();
                 
                 if(!imgData.success) {
-                    alert("حدث مشكلة أثناء رفع الصورة، تأكدي من الاتصال.");
+                    alert("حدث مشكلة أثناء رفع الصورة.");
                     btn.disabled = false;
                     btn.innerText = "رفع الصورة وحفظ الهدية فوري 🚀";
                     return;
@@ -155,14 +165,15 @@
                     name: name,
                     price: Number(price),
                     offerPrice: offerPrice ? Number(offerPrice) : null,
+                    category: category,
                     image: imgData.data.url
                 });
 
-                alert("تم إضافة الهدية بنجاح وتحديث المتجر فوري! 💝");
-                document.getElementById('pName').value = '';
-                document.getElementById('pPrice').value = '';
-                document.getElementById('pOffer').value = '';
-                document.getElementById('pImage').value = '';
+                alert("تم إضافة الهدية بنجاح! 💝");
+                document.getElementById( pName ).value =   ;
+                document.getElementById( pPrice ).value =   ;
+                document.getElementById( pOffer ).value =   ;
+                document.getElementById( pImage ).value =   ;
             } catch (e) {
                 alert("حدث خطأ في الاتصال.");
             } finally {
@@ -171,8 +182,13 @@
             }
         };
 
+        // تحديث إحصائيات المنتجات
         onSnapshot(collection(db, "products"), (snapshot) => {
-            const list = document.getElementById('adminProductsList');
+            const list = document.getElementById( adminProductsList );
+            const count = snapshot.size;
+            window.totalProductsCount = count;
+            updateStatsText();
+
             if(snapshot.empty) {
                 list.innerHTML = `<p class="col-span-full text-slate-500 text-sm">لا توجد أصناف مضافة حالياً.</p>`;
                 return;
@@ -187,23 +203,73 @@
                         <h3 class="font-bold text-sm text-slate-200">${p.name}</h3>
                         <div class="grid grid-cols-2 gap-2">
                             <div>
-                                <label class="text-[10px] text-slate-400 block">السعر الأساسي</label>
+                                <label class="text-[10px] text-slate-400 block">السعر</label>
                                 <input type="number" id="price_${id}" value="${p.price}" class="w-full bg-slate-900 border border-pink-500/20 rounded-lg px-2 py-1 text-xs text-white">
                             </div>
                             <div>
-                                <label class="text-[10px] text-pink-400 block font-bold">سعر العرض</label>
-                                <input type="number" id="offer_${id}" value="${p.offerPrice || ''}" placeholder="بدون" class="w-full bg-slate-900 border border-pink-500/20 rounded-lg px-2 py-1 text-xs text-pink-300">
+                                <label class="text-[10px] text-pink-400 block font-bold">العرض</label>
+                                <input type="number" id="offer_${id}" value="${p.offerPrice ||   }" placeholder="بدون" class="w-full bg-slate-900 border border-pink-500/20 rounded-lg px-2 py-1 text-xs text-pink-300">
                             </div>
                         </div>
                         <div class="flex gap-2 pt-1">
-                            <button onclick="updateProduct('${id}')" class="btn-gradient text-xs px-3 py-1.5 rounded-lg font-bold text-white shadow">حفظ</button>
-                            <button onclick="deleteProduct('${id}')" class="bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white text-xs px-3 py-1.5 rounded-lg transition">حذف</button>
+                            <button onclick="updateProduct( ${id} )" class="btn-gradient text-xs px-3 py-1.5 rounded-lg font-bold text-white shadow">حفظ</button>
+                            <button onclick="deleteProduct( ${id} )" class="bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white text-xs px-3 py-1.5 rounded-lg transition">حذف</button>
                         </div>
                     </div>
                 </div>
                 `;
-            }).join('');
+            }).join(  );
         });
+
+        // تحديث إحصائيات الطلبات
+        const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
+        onSnapshot(q, (snapshot) => {
+            const ordersList = document.getElementById( ordersList );
+            window.totalOrdersCount = snapshot.size;
+            updateStatsText();
+
+            if (snapshot.empty) {
+                ordersList.innerHTML = `<p class="text-slate-500 text-sm">لا توجد طلبات حتى الآن.</p>`;
+                return;
+            }
+            ordersList.innerHTML = snapshot.docs.map(docSnap => {
+                const o = docSnap.data();
+                const id = docSnap.id;
+                const itemsHtml = o.items.map(i => `<li>• ${i.name} (×${i.qty}) - ${i.price * i.qty} ج.م</li>`).join(  );
+                return `
+                <div class="glass-box p-5 rounded-2xl space-y-3 border-l-4 ${o.status ===  جديد  ?  border-l-pink-500  :  border-l-slate-700 }">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold text-base text-pink-300">${o.customerName}</h3>
+                            <p class="text-xs text-slate-300">📱 ${o.customerPhone}</p>
+                            <p class="text-xs text-slate-400">📍 ${o.customerAddress}</p>
+                            ${o.coupon ? `<p class="text-[11px] text-emerald-400 mt-1">🎟️ مستخدم كوبون: ${o.coupon}</p>` :   }
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-[11px] font-bold ${o.status ===  جديد  ?  bg-pink-500/20 text-pink-300 border border-pink-500/30  :  bg-slate-900 text-slate-400 }">
+                            ${o.status}
+                        </span>
+                    </div>
+                    <ul class="bg-slate-950/60 p-3 rounded-xl text-xs space-y-1 text-slate-300 border border-pink-500/10">${itemsHtml}</ul>
+                    <div class="flex justify-between items-center pt-2">
+                        <span class="font-black text-pink-400 text-sm">الإجمالي: ${o.total} ج.م</span>
+                        <div class="flex gap-2">
+                            ${o.status ===  جديد  ? `<button onclick="markDone( ${id} )" class="btn-gradient text-xs px-3 py-1.5 rounded-lg font-bold text-white shadow">تم التسليم ✓</button>` :   }
+                            <button onclick="deleteOrder( ${id} )" class="bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white text-xs px-3.5 py-1.5 rounded-lg transition">مسح</button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join(  );
+        });
+
+        function updateStatsText() {
+            const pCount = window.totalProductsCount || 0;
+            const oCount = window.totalOrdersCount || 0;
+            const counterEl = document.getElementById( statsCounter );
+            if(counterEl) {
+                counterEl.innerText = `إجمالي الهدايا: ${pCount} | الطلبات الواردة: ${oCount}`;
+            }
+        }
 
         window.updateProduct = async (id) => {
             const newPrice = document.getElementById(`price_${id}`).value;
@@ -222,42 +288,6 @@
             }
         };
 
-        const q = query(collection(db, "orders"), orderBy("createdAt", "desc"));
-        onSnapshot(q, (snapshot) => {
-            const ordersList = document.getElementById('ordersList');
-            if (snapshot.empty) {
-                ordersList.innerHTML = `<p class="text-slate-500 text-sm">لا توجد طلبات حتى الآن.</p>`;
-                return;
-            }
-            ordersList.innerHTML = snapshot.docs.map(docSnap => {
-                const o = docSnap.data();
-                const id = docSnap.id;
-                const itemsHtml = o.items.map(i => `<li>• ${i.name} (×${i.qty}) - ${i.price * i.qty} ج.م</li>`).join('');
-                return `
-                <div class="glass-box p-5 rounded-2xl space-y-3 border-l-4 ${o.status === 'جديد' ? 'border-l-pink-500' : 'border-l-slate-700'}">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-bold text-base text-pink-300">${o.customerName}</h3>
-                            <p class="text-xs text-slate-300">📱 ${o.customerPhone}</p>
-                            <p class="text-xs text-slate-400">📍 ${o.customerAddress}</p>
-                        </div>
-                        <span class="px-3 py-1 rounded-full text-[11px] font-bold ${o.status === 'جديد' ? 'bg-pink-500/20 text-pink-300 border border-pink-500/30' : 'bg-slate-900 text-slate-400'}">
-                            ${o.status}
-                        </span>
-                    </div>
-                    <ul class="bg-slate-950/60 p-3 rounded-xl text-xs space-y-1 text-slate-300 border border-pink-500/10">${itemsHtml}</ul>
-                    <div class="flex justify-between items-center pt-2">
-                        <span class="font-black text-pink-400 text-sm">الإجمالي: ${o.total} ج.م</span>
-                        <div class="flex gap-2">
-                            ${o.status === 'جديد' ? `<button onclick="markDone('${id}')" class="btn-gradient text-xs px-3 py-1.5 rounded-lg font-bold text-white shadow">تم التسليم ✓</button>` : ''}
-                            <button onclick="deleteOrder('${id}')" class="bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white text-xs px-3.5 py-1.5 rounded-lg transition">مسح</button>
-                        </div>
-                    </div>
-                </div>
-                `;
-            }).join('');
-        });
-
         window.markDone = async (id) => {
             await updateDoc(doc(db, "orders", id), { status: "تم التسليم" });
         };
@@ -268,4 +298,3 @@
     </script>
 </body>
 </html>
-
