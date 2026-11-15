@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family:  Cairo , sans-serif; background-color: #0d0914; color: #f3e8ff; }
+        body { font-family: 'Cairo', sans-serif; background-color: #0d0914; color: #f3e8ff; }
         .glass-nav { background: rgba(19, 13, 29, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(236, 72, 153, 0.2); }
         .glass-card { background: rgba(26, 17, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(236, 72, 153, 0.15); transition: all 0.3s ease; }
         .glass-card:hover { border-color: rgba(236, 72, 153, 0.5); transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.3); }
@@ -26,11 +26,9 @@
                 <h1 class="text-xl md:text-2xl font-black bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent">Esraa Gallery</h1>
             </div>
             <div class="flex items-center gap-3">
-                <!-- زر تبديل اللغة -->
-                <button onclick="toggleLanguage()" class="bg-slate-900 border border-pink-500/30 text-pink-300 px-3 py-2 rounded-2xl text-xs font-bold transition hover:bg-pink-500/10">
+                <button onclick="toggleLanguage()" id="langBtn" class="bg-slate-900 border border-pink-500/30 text-pink-300 px-3.5 py-2 rounded-2xl text-xs font-bold transition hover:bg-pink-500/10">
                     <i class="fa-solid fa-globe"></i> <span id="langBtnText">English</span>
                 </button>
-                <!-- زر السلة -->
                 <button onclick="toggleCart()" class="btn-gradient relative text-white px-4 py-2.5 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-pink-500/25">
                     <i class="fa-solid fa-bag-shopping"></i>
                     <span id="cartText">السلة</span>
@@ -40,7 +38,7 @@
         </div>
     </header>
 
-    <!-- بانر ترحيبي + البحث والتصنيفات -->
+    <!-- البانر والبحث والتصنيفات -->
     <div class="max-w-6xl mx-auto px-4 pt-8 space-y-4">
         <div class="bg-gradient-to-r from-pink-950/40 via-purple-950/40 to-slate-900 border border-pink-500/20 rounded-3xl p-6 md:p-8 text-center relative overflow-hidden">
             <div class="absolute -right-10 -top-10 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl"></div>
@@ -52,13 +50,13 @@
             </div>
         </div>
 
-        <!-- أزرار التصنيفات الجديدة -->
+        <!-- التصنيفات الأربعة المعتمدة -->
         <div class="flex flex-wrap justify-center gap-2 pt-2" id="categoryButtons">
-            <button onclick="filterCategory( all , this)" class="cat-btn bg-pink-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow" data-cat="all">الكل / All</button>
-            <button onclick="filterCategory( رجالي , this)" class="cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10" data-cat="رجالي">👔 رجالي / Men</button>
-            <button onclick="filterCategory( حريمي , this)" class="cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10" data-cat="حريمي">👜 حريمي / Women</button>
-            <button onclick="filterCategory( ديكور , this)" class="cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10" data-cat="ديكور">🖼️ ديكور / Decor</button>
-            <button onclick="filterCategory( اخري , this)" class="cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10" data-cat="اخري">🎁 أخرى / Other</button>
+            <button onclick="filterCategory('all', this)" class="cat-btn bg-pink-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow" data-cat="all">الكل</button>
+            <button onclick="filterCategory('رجالي', this)" class="cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10" data-cat="رجالي">👔 رجالي</button>
+            <button onclick="filterCategory('حريمي', this)" class="cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10" data-cat="حريمي">👜 حريمي</button>
+            <button onclick="filterCategory('ديكور', this)" class="cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10" data-cat="ديكور">🖼️ ديكور</button>
+            <button onclick="filterCategory('اخري', this)" class="cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10" data-cat="اخري">🎁 أخرى</button>
         </div>
     </div>
 
@@ -87,7 +85,6 @@
             <div id="cartItems" class="p-5 overflow-y-auto flex-1 space-y-3"></div>
 
             <div class="p-5 border-t border-pink-500/20 bg-purple-950/20 space-y-4">
-                <!-- كوبون الخصم HD11 -->
                 <div class="flex gap-2">
                     <input type="text" id="couponInput" placeholder="كود الخصم (HD11)" class="flex-1 bg-slate-900/80 border border-pink-500/30 rounded-xl px-3 py-2 text-xs text-white uppercase placeholder-slate-500 focus:outline-none focus:border-pink-500">
                     <button onclick="applyCoupon()" id="couponBtn" class="bg-pink-600/30 hover:bg-pink-600 text-pink-300 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition border border-pink-500/30">تطبيق الخصم</button>
@@ -127,7 +124,7 @@
         <span id="footerText">جميع الحقوق محفوظة لـ Esraa Gallery 💝 2026</span>
     </footer>
 
-    <!-- سكريبت العرض (مع اللغتين والتحسينات) -->
+    <!-- سكربت التشغيل المتكامل -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
@@ -148,11 +145,10 @@
 
         let allProducts = [];
         let cart = [];
-        let currentCategory =  all ;
+        let currentCategory = 'all';
         let discountPercent = 0;
-        let currentLang =  ar ; // اللغة الافتراضية
+        let currentLang = 'ar';
 
-        // قاموس الترجمات
         const translations = {
             ar: {
                 pageTitle: "Esraa Gallery - عالم الهدايا الراقية 💝",
@@ -216,56 +212,63 @@
             }
         };
 
+        // دالة تبديل اللغة
         window.toggleLanguage = () => {
-            currentLang = currentLang ===  ar  ?  en  :  ar ;
-            const htmlRoot = document.getElementById( htmlRoot );
-            htmlRoot.setAttribute( lang , currentLang);
-            htmlRoot.setAttribute( dir , currentLang ===  ar  ?  rtl  :  ltr );
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const htmlRoot = document.getElementById('htmlRoot');
+            htmlRoot.setAttribute('lang', currentLang);
+            htmlRoot.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
             updateUIStrings();
-            renderProducts();
+            filterProducts();
             updateCartUI();
         };
 
         function updateUIStrings() {
             const t = translations[currentLang];
-            document.getElementById( pageTitle ).innerText = t.pageTitle;
-            document.getElementById( cartText ).innerText = t.cartText;
-            document.getElementById( bannerTitle ).innerText = t.bannerTitle;
-            document.getElementById( bannerDesc ).innerText = t.bannerDesc;
-            document.getElementById( searchInput ).placeholder = t.searchPlaceholder;
-            document.getElementById( closeText ).innerText = t.closeText;
-            document.getElementById( cartModalTitle ).innerText = t.cartModalTitle;
-            document.getElementById( couponInput ).placeholder = t.couponPlaceholder;
-            document.getElementById( couponBtn ).innerText = t.couponBtn;
-            document.getElementById( subtotalLabel ).innerText = t.subtotalLabel;
-            document.getElementById( discountLabel ).innerText = t.discountLabel;
-            document.getElementById( totalLabel ).innerText = t.totalLabel;
-            document.getElementById( custName ).placeholder = t.custName;
-            document.getElementById( custPhone ).placeholder = t.custPhone;
-            document.getElementById( custAddress ).placeholder = t.custAddress;
-            document.getElementById( orderBtn ).innerText = t.orderBtn;
-            document.getElementById( footerText ).innerText = t.footerText;
-            document.getElementById( langBtnText ).innerText = t.langBtnText;
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('cartText').innerText = t.cartText;
+            document.getElementById('bannerTitle').innerText = t.bannerTitle;
+            document.getElementById('bannerDesc').innerText = t.bannerDesc;
+            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+            document.getElementById('closeText').innerText = t.closeText;
+            document.getElementById('cartModalTitle').innerText = t.cartModalTitle;
+            document.getElementById('couponInput').placeholder = t.couponPlaceholder;
+            document.getElementById('couponBtn').innerText = t.couponBtn;
+            document.getElementById('subtotalLabel').innerText = t.subtotalLabel;
+            document.getElementById('discountLabel').innerText = t.discountLabel;
+            document.getElementById('totalLabel').innerText = t.totalLabel;
+            document.getElementById('custName').placeholder = t.custName;
+            document.getElementById('custPhone').placeholder = t.custPhone;
+            document.getElementById('custAddress').placeholder = t.custAddress;
+            document.getElementById('orderBtn').innerText = t.orderBtn;
+            document.getElementById('footerText').innerText = t.footerText;
+            document.getElementById('langBtnText').innerText = t.langBtnText;
 
-            // تحديث أزرار التصنيفات
-            const cats = document.querySelectorAll( #categoryButtons button );
-            cats[0].innerText = t.catAll;
-            cats[1].innerText = `👔 ${t.catMen}`;
-            cats[2].innerText = `👜 ${t.catWomen}`;
-            cats[3].innerText = `🖼️ ${t.catDecor}`;
-            cats[4].innerText = `🎁 ${t.catOther}`;
+            const cats = document.querySelectorAll('#categoryButtons button');
+            if(cats.length >= 5) {
+                cats[0].innerText = t.catAll;
+                cats[1].innerText = `👔 ${t.catMen}`;
+                cats[2].innerText = `👜 ${t.catWomen}`;
+                cats[3].innerText = `🖼️ ${t.catDecor}`;
+                cats[4].innerText = `🎁 ${t.catOther}`;
+            }
         }
 
+        // جلب البيانات من فايربيس بشكل مباشر وفوري
         onSnapshot(collection(db, "products"), (snapshot) => {
-            const loading = document.getElementById( loading );
-            if(loading) loading.style.display =  none ;
+            const loading = document.getElementById('loading');
+            if(loading) loading.style.display = 'none';
             allProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             filterProducts();
+        }, (error) => {
+            console.error("Firebase Error: ", error);
+            const loading = document.getElementById('loading');
+            if(loading) loading.innerHTML = `<p class="text-rose-400">⚠️ خطأ في الاتصال بقاعدة البيانات، تأكد من الـ Rules.</p>`;
         });
 
         window.filterCategory = (cat, btn) => {
             currentCategory = cat;
-            document.querySelectorAll( .cat-btn ).forEach(b => {
+            document.querySelectorAll('.cat-btn').forEach(b => {
                 b.className = "cat-btn bg-slate-900 border border-pink-500/20 text-slate-300 px-4 py-2 rounded-xl text-xs font-bold transition hover:bg-pink-500/10";
             });
             btn.className = "cat-btn bg-pink-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow";
@@ -273,13 +276,16 @@
         };
 
         window.filterProducts = () => {
-            const query = document.getElementById( searchInput ).value.toLowerCase().trim();
-            const grid = document.getElementById( productsGrid );
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const grid = document.getElementById('productsGrid');
+            if(!grid) return;
+
             const t = translations[currentLang];
 
             let filtered = allProducts.filter(p => {
-                const matchesCat = currentCategory ===  all  || (p.category && p.category === currentCategory);
-                const matchesSearch = p.name.toLowerCase().includes(query);
+                const matchesCat = currentCategory === 'all' || (p.category && p.category === currentCategory);
+                const matchesSearch = p.name ? p.name.toLowerCase().includes(query) : true;
                 return matchesCat && matchesSearch;
             });
 
@@ -294,39 +300,45 @@
 
                 return `
                 <div class="glass-card rounded-3xl overflow-hidden flex flex-col relative group">
-                    ${hasOffer ? `<span class="absolute top-3 right-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-lg z-10 tracking-wide">عروض مميزة 🔥</span>` :   }
-                    <div class="w-full h-60 overflow-hidden bg-slate-900/50 cursor-pointer" onclick="openImageModal( ${p.image} )">
+                    ${hasOffer ? `<span class="absolute top-3 right-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-lg z-10 tracking-wide">عروض مميزة 🔥</span>` : ''}
+                    <div class="w-full h-60 overflow-hidden bg-slate-900/50 cursor-pointer" onclick="openImageModal('${p.image}')">
                         <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                     </div>
                     <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
                         <div>
-                            <span class="text-[10px] text-pink-400 font-bold bg-pink-500/10 px-2 py-0.5 rounded-md inline-block mb-1.5">${p.category ||  أخرى }</span>
+                            <span class="text-[10px] text-pink-400 font-bold bg-pink-500/10 px-2 py-0.5 rounded-md inline-block mb-1.5">${p.category || 'أخرى'}</span>
                             <h3 class="font-bold text-base mb-2 text-slate-100 group-hover:text-pink-300 transition">${p.name}</h3>
                             <div class="flex items-center gap-3">
                                 <span class="text-pink-400 font-black text-xl">${finalPrice} ج.م</span>
-                                ${hasOffer ? `<span class="text-slate-500 line-through text-xs font-semibold">${p.price} ج.م</span>` :   }
+                                ${hasOffer ? `<span class="text-slate-500 line-through text-xs font-semibold">${p.price} ج.م</span>` : ''}
                             </div>
                         </div>
-                        <button onclick="addToCart( ${p.id} )" class="w-full btn-gradient py-2.5 rounded-2xl font-bold text-sm shadow-md shadow-pink-500/20 flex items-center justify-center gap-2">
+                        <button onclick="addToCart('${p.id}')" class="w-full btn-gradient py-2.5 rounded-2xl font-bold text-sm shadow-md shadow-pink-500/20 flex items-center justify-center gap-2">
                             <i class="fa-solid fa-cart-plus"></i> ${t.addCart}
                         </button>
                     </div>
                 </div>
                 `;
-            }).join(  );
+            }).join('');
         };
 
         window.openImageModal = (url) => {
-            document.getElementById( modalImage ).src = url;
-            document.getElementById( imageModal ).classList.remove( hidden );
+            const modalImg = document.getElementById('modalImage');
+            const modal = document.getElementById('imageModal');
+            if(modalImg && modal) {
+                modalImg.src = url;
+                modal.classList.remove('hidden');
+            }
         };
 
         window.closeImageModal = () => {
-            document.getElementById( imageModal ).classList.add( hidden );
+            const modal = document.getElementById('imageModal');
+            if(modal) modal.classList.add('hidden');
         };
 
         window.addToCart = (id) => {
             const product = allProducts.find(p => p.id === id);
+            if(!product) return;
             const finalPrice = (product.offerPrice && Number(product.offerPrice) < Number(product.price)) ? Number(product.offerPrice) : Number(product.price);
             
             const existing = cart.find(item => item.id === id);
@@ -344,16 +356,20 @@
         };
 
         window.applyCoupon = () => {
-            const code = document.getElementById( couponInput ).value.trim().toUpperCase();
-            const msg = document.getElementById( couponMsg );
+            const couponInput = document.getElementById('couponInput');
+            const msg = document.getElementById('couponMsg');
+            if(!couponInput || !msg) return;
+
+            const code = couponInput.value.trim().toUpperCase();
             if (code === "HD11") {
                 discountPercent = 10;
-                msg.innerText = currentLang ===  ar  ? "🎉 تم تطبيق كوبون HD11 بنجاح (خصم 10%)!" : "🎉 Coupon HD11 applied successfully (10% off)!";
-                msg.classList.remove( hidden );
+                msg.innerText = currentLang === 'ar' ? "🎉 تم تطبيق كوبون HD11 بنجاح (خصم 10%)!" : "🎉 Coupon HD11 applied successfully (10% off)!";
+                msg.classList.remove('hidden');
+                msg.className = "text-xs font-semibold text-emerald-400";
             } else {
                 discountPercent = 0;
-                msg.innerText = currentLang ===  ar  ? "❌ كود الخصم غير صحيح!" : "❌ Invalid coupon code!";
-                msg.classList.remove( hidden );
+                msg.innerText = currentLang === 'ar' ? "❌ كود الخصم غير صحيح!" : "❌ Invalid coupon code!";
+                msg.classList.remove('hidden');
                 msg.className = "text-xs font-semibold text-rose-400";
             }
             updateCartUI();
@@ -366,20 +382,26 @@
             const discountVal = (subtotal * discountPercent) / 100;
             const total = subtotal - discountVal;
             
-            document.getElementById( cartCount ).innerText = count;
-            document.getElementById( subtotalAmount ).innerText = `${subtotal} ج.م`;
+            const cartCountEl = document.getElementById('cartCount');
+            const subtotalAmountEl = document.getElementById('subtotalAmount');
+            if(cartCountEl) cartCountEl.innerText = count;
+            if(subtotalAmountEl) subtotalAmountEl.innerText = `${subtotal} ج.م`;
             
-            const discRow = document.getElementById( discountRow );
-            if (discountPercent > 0) {
-                discRow.classList.remove( hidden );
-                document.getElementById( discountAmount ).innerText = `-${discountVal} ج.م`;
-            } else {
-                discRow.classList.add( hidden );
+            const discRow = document.getElementById('discountRow');
+            if (discountPercent > 0 && discRow) {
+                discRow.classList.remove('hidden');
+                const discountAmountEl = document.getElementById('discountAmount');
+                if(discountAmountEl) discountAmountEl.innerText = `-${discountVal} ج.م`;
+            } else if(discRow) {
+                discRow.classList.add('hidden');
             }
 
-            document.getElementById( cartTotal ).innerText = `${total} ج.م`;
+            const cartTotalEl = document.getElementById('cartTotal');
+            if(cartTotalEl) cartTotalEl.innerText = `${total} ج.م`;
 
-            const itemsContainer = document.getElementById( cartItems );
+            const itemsContainer = document.getElementById('cartItems');
+            if(!itemsContainer) return;
+
             if (cart.length === 0) {
                 itemsContainer.innerHTML = `<p class="text-center text-slate-500 py-10 text-sm">${t.emptyCart}</p>`;
                 return;
@@ -391,39 +413,48 @@
                         <h4 class="font-bold text-sm text-slate-200">${item.name}</h4>
                         <span class="text-xs font-semibold text-pink-400">${item.price} ج.م × ${item.qty}</span>
                     </div>
-                    <button onclick="removeFromCart( ${item.id} )" class="text-rose-400 hover:text-rose-300 w-8 h-8 rounded-xl bg-rose-500/10 flex items-center justify-center transition">
+                    <button onclick="removeFromCart('${item.id}')" class="text-rose-400 hover:text-rose-300 w-8 h-8 rounded-xl bg-rose-500/10 flex items-center justify-center transition">
                         <i class="fa-solid fa-trash-can text-xs"></i>
                     </button>
                 </div>
-            `).join(  );
+            `).join('');
         }
 
         window.toggleCart = () => {
-            document.getElementById( cartModal ).classList.toggle( hidden );
-            updateCartUI();
+            const cartModal = document.getElementById('cartModal');
+            if(cartModal) {
+                cartModal.classList.toggle('hidden');
+                updateCartUI();
+            }
         };
 
         window.submitOrder = async () => {
             if (cart.length === 0) {
-                return alert(currentLang ===  ar  ? "⚠️ سلة الهدايا فارغة!" : "⚠️ Your cart is empty!");
+                return alert(currentLang === 'ar' ? "⚠️ سلة الهدايا فارغة!" : "⚠️ Your cart is empty!");
             }
 
-            const name = document.getElementById( custName ).value.trim();
-            const phone = document.getElementById( custPhone ).value.trim();
-            const address = document.getElementById( custAddress ).value.trim();
+            const nameInput = document.getElementById('custName');
+            const phoneInput = document.getElementById('custPhone');
+            const addressInput = document.getElementById('custAddress');
 
-            if (!name) return alert(currentLang ===  ar  ? "من فضلك أدخلي الاسم بالكامل 👤" : "Please enter your full name 👤");
+            const name = nameInput ? nameInput.value.trim() : '';
+            const phone = phoneInput ? phoneInput.value.trim() : '';
+            const address = addressInput ? addressInput.value.trim() : '';
+
+            if (!name) return alert(currentLang === 'ar' ? "من فضلك أدخلي الاسم بالكامل 👤" : "Please enter your full name 👤");
             
             const egyptianPhoneRegex = /^01[0125][0-9]{8}$/;
             if (!phone || !egyptianPhoneRegex.test(phone)) {
-                return alert(currentLang ===  ar  ? "⚠️ رقم الموبايل غير صحيح! يجب أن يبدأ بـ 01 ومكون من 11 رقماً" : "⚠️ Invalid Egyptian mobile number!");
+                return alert(currentLang === 'ar' ? "⚠️ رقم الموبايل غير صحيح! يجب أن يبدأ بـ 01 ومكون من 11 رقماً" : "⚠️ Invalid Egyptian mobile number!");
             }
 
-            if (!address) return alert(currentLang ===  ar  ? "من فضلك أدخلي العنوان بالتفصيل 📍" : "Please enter your address 📍");
+            if (!address) return alert(currentLang === 'ar' ? "من فضلك أدخلي العنوان بالتفصيل 📍" : "Please enter your address 📍");
 
-            const btn = document.getElementById( orderBtn );
-            btn.disabled = true;
-            btn.innerText = currentLang ===  ar  ? "جاري تأكيد الطلب..." : "Confirming order...";
+            const btn = document.getElementById('orderBtn');
+            if(btn) {
+                btn.disabled = true;
+                btn.innerText = currentLang === 'ar' ? "جاري تأكيد الطلب..." : "Confirming order...";
+            }
 
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const total = subtotal - ((subtotal * discountPercent) / 100);
@@ -445,16 +476,19 @@
                 if(discountPercent > 0) msg += `كوبون مستخدم: HD11\n`;
                 msg += `\nالإجمالي: ${total} ج.م`;
 
-                alert(currentLang ===  ar  ? "تم تأكيد طلبك بنجاح! 💝" : "Order confirmed successfully! 💝");
+                alert(currentLang === 'ar' ? "تم تأكيد طلبك بنجاح! 💝" : "Order confirmed successfully! 💝");
                 cart = [];
                 discountPercent = 0;
                 toggleCart();
-                window.open(`https://wa.me/${SHOP_WHATSAPP}?text=${encodeURIComponent(msg)}`,  _blank );
+                window.open(`https://wa.me/${SHOP_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
             } catch (e) {
+                console.error(e);
                 alert("حدث خطأ، جربي مرة أخرى.");
             } finally {
-                btn.disabled = false;
-                btn.innerText = currentLang ===  ar  ? "تأكيد الطلب 🛍️" : "Confirm Order 🛍️";
+                if(btn) {
+                    btn.disabled = false;
+                    btn.innerText = currentLang === 'ar' ? "تأكيد الطلب 🛍️" : "Confirm Order 🛍️";
+                }
             }
         };
     </script>
