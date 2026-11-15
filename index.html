@@ -31,6 +31,19 @@
             opacity: 0;
             visibility: hidden;
         }
+
+        /* زر السلة العائم المتحرك في أسفل الشاشة */
+        .floating-cart {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 50;
+            animation: bounceSlow 3s infinite ease-in-out;
+        }
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-pink-500 selection:text-white">
@@ -55,50 +68,53 @@
         </div>
     </div>
 
-    <!-- الهيدر المنظم والرايق -->
+    <!-- الهيدر المرتب (التواصل شمال، الإنجليزي يمين، الشعار في النص) -->
     <header class="glass-nav sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3">
-            <!-- الشعار وتحته الجملة في الهيدلاين بدون زحمة -->
-            <div class="flex items-center gap-3">
-                <span class="text-3xl">💝</span>
-                <div>
-                    <h1 class="text-lg md:text-xl font-black bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent leading-tight">Esraa Gallery</h1>
-                    <p class="text-[11px] text-pink-300/80 font-medium">عالم الهدايا الراقية والحفر والطباعة الفاخرة</p>
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <!-- زر للتواصل على الشمال خالص -->
+            <div class="relative">
+                <button onclick="toggleContactMenu()" id="contactBtn" class="bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 px-3 py-2 rounded-2xl text-xs font-bold transition hover:bg-emerald-600/30 flex items-center gap-1.5 shadow">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> <span id="contactText">للتواصل</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
+                </button>
+                <!-- القائمة المنسدلة -->
+                <div id="contactDropdown" class="absolute right-0 mt-2 w-52 bg-slate-900 border border-pink-500/20 rounded-2xl shadow-2xl hidden z-50 overflow-hidden py-1">
+                    <a href="https://wa.me/201124763164" target="_blank" class="flex items-center gap-2.5 px-4 py-3 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition border-b border-slate-800">
+                        <i class="fa-solid fa-comments text-emerald-400 text-sm"></i> <span id="directChatText">التواصل مع إسراء واتساب</span>
+                    </a>
+                    <a href="https://chat.whatsapp.com/Goln31VT0BjDL4pMzKfOS5?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" class="flex items-center gap-2.5 px-4 py-3 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition">
+                        <i class="fa-solid fa-users text-emerald-400 text-sm"></i> <span id="groupChatText">الجروب لمتابعة كل ما هو جديد</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- الأزرار مرتبة ومنظمة -->
-            <div class="flex items-center gap-2">
-                <!-- قائمة التواصل (مكتوب عليها للتواصل بس) -->
-                <div class="relative">
-                    <button onclick="toggleContactMenu()" id="contactBtn" class="bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 px-3.5 py-2 rounded-2xl text-xs font-bold transition hover:bg-emerald-600/30 flex items-center gap-1.5 shadow">
-                        <i class="fa-brands fa-whatsapp text-sm"></i> <span id="contactText">للتواصل</span> <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                    </button>
-                    <!-- القائمة المنسدلة -->
-                    <div id="contactDropdown" class="absolute left-0 mt-2 w-52 bg-slate-900 border border-pink-500/20 rounded-2xl shadow-2xl hidden z-50 overflow-hidden py-1">
-                        <a href="https://wa.me/201124763164" target="_blank" class="flex items-center gap-2.5 px-4 py-3 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition border-b border-slate-800">
-                            <i class="fa-solid fa-comments text-emerald-400 text-sm"></i> <span id="directChatText">التواصل مع إسراء واتساب</span>
-                        </a>
-                        <a href="https://chat.whatsapp.com/Goln31VT0BjDL4pMzKfOS5?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" class="flex items-center gap-2.5 px-4 py-3 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition">
-                            <i class="fa-solid fa-users text-emerald-400 text-sm"></i> <span id="groupChatText">الجروب لمتابعة كل ما هو جديد</span>
-                        </a>
-                    </div>
+            <!-- الشعار في النص -->
+            <div class="flex items-center gap-2.5 text-center">
+                <span class="text-2xl md:text-3xl">💝</span>
+                <div>
+                    <h1 class="text-base md:text-xl font-black bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-400 bg-clip-text text-transparent leading-tight">Esraa Gallery</h1>
+                    <p class="text-[10px] text-pink-300/80 hidden sm:block font-medium">عالم الهدايا الراقية والحفر والطباعة</p>
                 </div>
+            </div>
 
-                <!-- زر اللغة -->
+            <!-- زر اللغة على اليمين خالص -->
+            <div>
                 <button onclick="toggleLanguage()" id="langBtn" class="bg-slate-900 border border-pink-500/30 text-pink-300 px-3 py-2 rounded-2xl text-xs font-bold transition hover:bg-pink-500/10">
                     <i class="fa-solid fa-globe"></i> <span id="langBtnText">English</span>
                 </button>
-
-                <!-- زر السلة -->
-                <button onclick="toggleCart()" class="btn-gradient relative text-white px-4 py-2 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-pink-500/25 text-xs">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span id="cartText">السلة</span>
-                    <span id="cartCount" class="bg-white text-pink-600 text-[10px] font-black px-1.5 py-0.5 rounded-full shadow">0</span>
-                </button>
             </div>
+
         </div>
     </header>
+
+    <!-- زر السلة العائم المتحرك في أسفل الشاشة -->
+    <div class="floating-cart">
+        <button onclick="toggleCart()" class="btn-gradient text-white px-5 py-3 rounded-full font-bold flex items-center gap-2.5 shadow-2xl shadow-pink-500/50 border border-pink-400/40 text-sm">
+            <i class="fa-solid fa-bag-shopping text-base"></i>
+            <span id="cartFloatText">السلة</span>
+            <span id="cartCount" class="bg-white text-pink-600 text-xs font-black px-2 py-0.5 rounded-full shadow">0</span>
+        </button>
+    </div>
 
     <!-- البانر والبحث -->
     <div class="max-w-6xl mx-auto px-4 pt-6 space-y-4">
@@ -122,7 +138,7 @@
     </div>
 
     <!-- شبكة المنتجات -->
-    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full pb-20">
         <div id="loading" class="text-center py-20 text-pink-400 text-xl font-bold animate-pulse">جاري تحميل الهدايا الساحرة... 🎁</div>
         <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </main>
@@ -240,7 +256,7 @@
         const translations = {
             ar: {
                 pageTitle: "Esraa Gallery - عالم الهدايا الراقية 💝",
-                cartText: "السلة",
+                cartFloatText: "السلة",
                 bannerTitle: "جمعنا كل ما هو جميل هنا لك انت",
                 searchPlaceholder: "ابحثي عن هدية معينة... 🔍",
                 loadingText: "جاري تحميل الهدايا الساحرة... 🎁",
@@ -274,7 +290,7 @@
             },
             en: {
                 pageTitle: "Esraa Gallery - Luxury Gifts World 💝",
-                cartText: "Cart",
+                cartFloatText: "Cart",
                 bannerTitle: "We collected everything beautiful here for you",
                 searchPlaceholder: "Search for a gift... 🔍",
                 loadingText: "Loading magical gifts... 🎁",
@@ -321,7 +337,7 @@
         function updateUIStrings() {
             const t = translations[currentLang];
             document.getElementById('pageTitle').innerText = t.pageTitle;
-            document.getElementById('cartText').innerText = t.cartText;
+            document.getElementById('cartFloatText').innerText = t.cartFloatText;
             document.getElementById('bannerTitle').innerText = t.bannerTitle;
             document.getElementById('searchInput').placeholder = t.searchPlaceholder;
             document.getElementById('closeText').innerText = t.closeText;
