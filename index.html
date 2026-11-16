@@ -77,9 +77,9 @@
                 <button onclick="toggleContactMenu()" id="contactBtn" class="bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 px-3 py-2 rounded-2xl text-xs font-bold transition hover:bg-emerald-600/30 flex items-center gap-1.5 shadow">
                     <i class="fa-brands fa-whatsapp text-sm"></i> <span id="contactText">للتواصل</span> <i class="fa-solid fa-chevron-down text-[9px]"></i>
                 </button>
-                <!-- القائمة المنسدلة (تواصل + جروب + تيكتوك) -->
+                <!-- القائمة المنسدلة (تواصل + جروب + تيكتوك) بالرقم الصح -->
                 <div id="contactDropdown" class="absolute right-0 mt-2 w-56 bg-slate-900 border border-pink-500/20 rounded-2xl shadow-2xl hidden z-50 overflow-hidden py-1">
-                    <a href="wa.me/201140474139" target="_blank" class="flex items-center gap-2.5 px-4 py-3 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition border-b border-slate-800">
+                    <a href="https://wa.me/201124763164" target="_blank" class="flex items-center gap-2.5 px-4 py-3 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition border-b border-slate-800">
                         <i class="fa-solid fa-comments text-emerald-400 text-sm"></i> <span id="directChatText">التواصل مع إسراء واتساب</span>
                     </a>
                     <a href="https://chat.whatsapp.com/Goln31VT0BjDL4pMzKfOS5?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" class="flex items-center gap-2.5 px-4 py-3 text-xs text-slate-200 hover:bg-emerald-600/20 hover:text-emerald-300 transition border-b border-slate-800">
@@ -209,7 +209,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-        // إخفاء شاشة التحميل بانسيابية
+        // إخفاء شاشة التحميل الأصلية بانسيابية
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
